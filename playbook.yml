@@ -1,0 +1,24 @@
+---
+- name: Install and Configure n8n
+  hosts: n8n_servers
+  become: yes
+  vars_files:
+    - group_vars/all.yml
+  
+  roles:
+    - common
+    - docker
+    - n8n
+    
+    # Stage 1: Configure Nginx for HTTP (to allow Certbot validation)
+    - role: nginx
+      vars:
+        ssl_enabled: false
+
+    # Stage 2: Obtain Certificates
+    - certbot
+
+    # Stage 3: Reconfigure Nginx for HTTPS (custom port)
+    - role: nginx
+      vars:
+        ssl_enabled: true

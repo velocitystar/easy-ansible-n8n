@@ -1,0 +1,20 @@
+version: "3"
+services:
+  n8n:
+    image: n8nio/n8n:{{ n8n_version }}
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:{{ n8n_port }}:5678"
+    environment:
+      - N8N_HOST={{ domain_name }}
+      - WEBHOOK_TUNNEL_URL=https://{{ domain_name }}/
+      - WEBHOOK_URL=https://{{ domain_name }}/
+      - GENERIC_TIMEZONE=UTC
+      - EXECUTIONS_PROCESS=main
+      - EXECUTIONS_TIMEOUT=3600
+      - EXECUTIONS_TIMEOUT_MAX=7200
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=90
+    volumes:
+      - /home/{{ ansible_user }}/n8n-data:/home/node/.n8n

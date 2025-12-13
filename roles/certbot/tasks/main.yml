@@ -1,0 +1,29 @@
+---
+- name: Install Certbot and Nginx plugin
+  apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+
+- name: Check if certificate already exists
+  stat:
+    path: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
+  register: cert_stat
+
+- name: Create webroot for Certbot
+  file:
+    path: /var/www/certbot
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Obtain SSL certificate
+  command: >
+    certbot certonly --nginx
+    -d {{ domain_name }}
+    --non-interactive
+    --agree-tos
+    -m {{ letsencrypt_email }}
+  when: not cert_stat.stat.exists

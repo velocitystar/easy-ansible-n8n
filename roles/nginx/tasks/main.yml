@@ -1,0 +1,29 @@
+---
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Copy Nginx configuration
+  template:
+    src: n8n.conf.j2
+    dest: /etc/nginx/sites-available/n8n
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable Nginx configuration
+  file:
+    src: /etc/nginx/sites-available/n8n
+    dest: /etc/nginx/sites-enabled/n8n
+    state: link
+
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Reload Nginx
+  service:
+    name: nginx
+    state: reloaded

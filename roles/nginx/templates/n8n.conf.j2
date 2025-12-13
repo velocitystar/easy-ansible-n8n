@@ -1,0 +1,48 @@
+server {
+    listen 80;
+    server_name {{ domain_name }};
+
+    # Allow Certbot ACME challenge
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    # Redirect to HTTPS if SSL is enabled
+    {% if ssl_enabled | default(false) %}
+    location / {
+        return 301 https://$host:{{ nginx_https_port }}$request_uri;
+    }
+    {% else %}
+    location / {
+        proxy_pass http://localhost:{{ n8n_port }};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+    {% endif %}
+}
+
+{% if ssl_enabled | default(false) %}
+server {
+    listen {{ nginx_https_port }} ssl;
+    server_name {{ domain_name }};
+
+    ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
+
+    # SSL Parameters (Guidelines from certbot/mozilla usually recommended)
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        proxy_pass http://localhost:{{ n8n_port }};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+{% endif %}
