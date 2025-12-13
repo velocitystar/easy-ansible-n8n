@@ -10,6 +10,13 @@
     state: started
     enabled: yes
 
+- name: Allow Custom HTTPS Port in UFW
+  ufw:
+    rule: allow
+    port: "{{ nginx_https_port | string }}"
+    proto: tcp
+  when: nginx_https_port != 443
+
 - name: Copy Nginx configuration
   template:
     src: n8n.conf.j2
