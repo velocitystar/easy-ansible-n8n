@@ -11,4 +11,19 @@
       - software-properties-common
       - ca-certificates
       - gnupg
+      - ufw
     state: present
+
+- name: Configure UFW to allow OpenSSH
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Configure UFW to allow Nginx Full
+  ufw:
+    rule: allow
+    name: "Nginx Full"
+
+- name: Enable UFW
+  ufw:
+    state: enabled

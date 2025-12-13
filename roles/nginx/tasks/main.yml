@@ -4,6 +4,12 @@
     name: nginx
     state: present
 
+- name: Start and Enable Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
 - name: Copy Nginx configuration
   template:
     src: n8n.conf.j2
