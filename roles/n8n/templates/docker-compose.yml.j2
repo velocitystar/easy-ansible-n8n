@@ -7,7 +7,7 @@ services:
     ports:
       - "127.0.0.1:{{ n8n_port }}:5678"
     environment:
-      - N8N_HOST={{ domain_name }}:{{ nginx_https_port }}
+      - N8N_HOST={{ domain_name }}
       - WEBHOOK_TUNNEL_URL=https://{{ domain_name }}:{{ nginx_https_port }}/
       - WEBHOOK_URL=https://{{ domain_name }}:{{ nginx_https_port }}/
       - VUE_APP_URL_BASE_API=https://{{ domain_name }}:{{ nginx_https_port }}/
