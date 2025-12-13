@@ -18,5 +18,6 @@ services:
       - EXECUTIONS_DATA_MAX_AGE=90
       - N8N_REINSTALL_MISSING_PACKAGES=true
       - N8N_EDITOR_BASE_URL=https://{{ domain_name }}:{{ nginx_https_port }}
+      - N8N_PUSH_BACKEND=websocket
     volumes:
       - /home/{{ ansible_user }}/n8n-data:/home/node/.n8n
