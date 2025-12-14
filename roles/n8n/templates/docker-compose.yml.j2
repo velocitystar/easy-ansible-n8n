@@ -7,9 +7,9 @@ services:
     ports:
       - "127.0.0.1:{{ n8n_port }}:5678"
     environment:
-      - N8N_HOST={{ domain_name }}
-      - WEBHOOK_TUNNEL_URL=https://{{ domain_name }}:{{ nginx_https_port }}/
-      - WEBHOOK_URL=https://{{ domain_name }}:{{ nginx_https_port }}/
+      - N8N_HOST=192.168.161.22
+      - WEBHOOK_TUNNEL_URL=https://192.168.161.22:{{ nginx_https_port }}/
+      - WEBHOOK_URL=https://192.168.161.22:{{ nginx_https_port }}/
       - N8N_PORT="{{ n8n_port }}"
       - GENERIC_TIMEZONE=UTC
       - EXECUTIONS_PROCESS=main
@@ -19,7 +19,7 @@ services:
       - EXECUTIONS_DATA_MAX_AGE=90
       - N8N_REINSTALL_MISSING_PACKAGES=true
       - N8N_RUNNERS_ENABLED=true
-      - VUE_APP_URL_BASE_API="https://{{ domain_name }}:{{ nginx_https_port }}/"
+      - VUE_APP_URL_BASE_API="https://192.168.161.22:{{ nginx_https_port }}/"
 
     volumes:
       - /home/{{ ansible_user }}/n8n-data:/home/node/.n8n
