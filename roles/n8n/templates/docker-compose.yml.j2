@@ -17,5 +17,6 @@ services:
       - EXECUTIONS_DATA_PRUNE=true
       - EXECUTIONS_DATA_MAX_AGE=90
       - N8N_REINSTALL_MISSING_PACKAGES=true
+      - N8N_PUSH_BACKEND=sse
     volumes:
       - /home/{{ ansible_user }}/n8n-data:/home/node/.n8n
