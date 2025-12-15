@@ -14,4 +14,4 @@ ansible_user: "administrator"
 
 # Storage configuration
 # Options: local, postgres
-n8n_storage_type: local
+n8n_storage_type: postgres
