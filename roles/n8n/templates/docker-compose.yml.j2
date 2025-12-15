@@ -23,6 +23,25 @@ services:
       - N8N_PUSH_BACKEND=websocket
       - N8N_TRUST_PROXY=true
       - N8N_PROXY_HOPS=1
+      {% if n8n_storage_type == 'postgres' %}
+      - DB_TYPE={{ n8n_db_type }}
+      - DB_POSTGRESDB_HOST={{ n8n_db_host }}
+      - DB_POSTGRESDB_PORT={{ n8n_db_port }}
+      - DB_POSTGRESDB_DATABASE={{ n8n_db_name }}
+      - DB_POSTGRESDB_USER={{ n8n_db_user }}
+      - DB_POSTGRESDB_PASSWORD={{ n8n_db_password }}
+      {% endif %}
 
     volumes:
       - /home/{{ ansible_user }}/n8n-data:/home/node/.n8n
+
+    {% if n8n_storage_type == 'postgres' %}
+    networks:
+      - n8n_network
+    {% endif %}
+
+{% if n8n_storage_type == 'postgres' %}
+networks:
+  n8n_network:
+    external: true
+{% endif %}

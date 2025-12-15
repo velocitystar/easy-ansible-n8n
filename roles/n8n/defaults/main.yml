@@ -1,0 +1,10 @@
+---
+n8n_storage_type: local
+
+# Database Configuration
+n8n_db_type: postgresdb
+n8n_db_host: n8n-postgres
+n8n_db_port: 5432
+n8n_db_name: "{{ postgres_db | default('n8n_db') }}"
+n8n_db_user: "{{ postgres_user | default('n8n_user') }}"
+n8n_db_password: "{{ postgres_password | default('n8n_secure_password') }}"

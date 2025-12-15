@@ -1,0 +1,11 @@
+---
+postgres_version: "13"
+postgres_user: n8n_user
+postgres_password: n8n_secure_password
+postgres_db: n8n_db
+postgres_port: 5432
+postgres_data_dir: "/home/{{ ansible_user }}/postgres-data"
+
+# Container management
+postgres_state: started
+postgres_restart_policy: unless-stopped

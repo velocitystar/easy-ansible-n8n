@@ -8,6 +8,10 @@
   roles:
     - common
     - docker
+    
+    - role: postgresql
+      when: n8n_storage_type == 'postgres'
+
     - n8n
     
     # Stage 1: Configure Nginx for HTTP (to allow Certbot validation)

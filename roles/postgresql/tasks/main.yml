@@ -1,0 +1,29 @@
+---
+- name: Create N8n Network
+  docker_network:
+    name: n8n_network
+
+- name: Create PostgreSQL Data Directory
+  file:
+    path: "{{ postgres_data_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Start PostgreSQL Container
+  docker_container:
+    name: n8n-postgres
+    image: "postgres:{{ postgres_version }}"
+    state: "{{ postgres_state }}"
+    restart_policy: "{{ postgres_restart_policy }}"
+    networks:
+      - name: n8n_network
+    env:
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+      POSTGRES_DB: "{{ postgres_db }}"
+    volumes:
+      - "{{ postgres_data_dir }}:/var/lib/postgresql/data"
+    ports:
+      - "127.0.0.1:{{ postgres_port }}:5432"
