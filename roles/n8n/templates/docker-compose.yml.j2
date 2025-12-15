@@ -23,6 +23,7 @@ services:
       - "N8N_PUSH_BACKEND=websocket"
       - "N8N_TRUST_PROXY=true"
       - "N8N_PROXY_HOPS=1"
+      - N8N_CUSTOM_EXTENSIONS=/home/{{ ansible_user }}/n8n-data:/home/node/.n8n/custom
       {%- if n8n_storage_type == 'postgres' %}
       - "DB_TYPE={{ n8n_db_type }}"
       - "DB_POSTGRESDB_HOST={{ n8n_db_host }}"
