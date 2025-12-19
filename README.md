@@ -76,7 +76,7 @@ Unlock the power of customization by editing `group_vars/all.yml`. This file con
 
 **Other Configurable Variables:**
 
--   `nginx_https_port`: The port you want to access n8n on (default: `443` or `4445` if customized).
+-   `nginx_https_port`: (Optional) The port you want to access n8n on. If commented out, it defaults to standard HTTPS port `443`.
 -   `n8n_version`: The Docker tag for n8n (default: `latest`).
 -   `n8n_storage_type`: `local` (SQLite) or `postgres` (PostgreSQL container).
 
@@ -121,9 +121,13 @@ The playbook will performs the following steps:
 
 Once the playbook completes, you can access your n8n instance at:
 
-`https://<your-domain>:<nginx_https_port>/`
+`https://<your-domain>/` (if using default port 443)
 
-Example: `https://n8n.example.com:4445/`
+OR
+
+`https://<your-domain>:<nginx_https_port>/` (if using a custom port)
+
+Example: `https://n8n.example.com/`
 
 ## Troubleshooting
 

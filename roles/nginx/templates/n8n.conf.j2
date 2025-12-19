@@ -7,25 +7,15 @@ server {
     listen 80;
     server_name {{ domain_name }};
 
-    # Allow Certbot ACME challenge
+    # Allow Let's Encrypt challenges
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;
     }
 
-    # Redirect to HTTPS if SSL is enabled
-    {% if ssl_enabled | default(false) %}
+    # Redirect all other traffic to HTTPS
     location / {
+        {% if nginx_https_port is defined and nginx_https_port != 443 %}
         return 301 https://$host:{{ nginx_https_port }}$request_uri;
-    }
-    {% else %}
-    location / {
-        proxy_pass http://localhost:{{ n8n_port }};
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
     {% endif %}
 }
 

@@ -1,7 +1,7 @@
 # User configuration
 domain_name: "n8n.YOURDOMAIN.COM"
 letsencrypt_email: "USER@YOURDOMAIN.COM"
-nginx_https_port: 4445
+# nginx_https_port: 4445
 
 # n8n configuration
 n8n_version: "latest"

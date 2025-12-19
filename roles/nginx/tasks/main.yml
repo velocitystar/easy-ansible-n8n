@@ -15,7 +15,7 @@
     rule: allow
     port: "{{ nginx_https_port | string }}"
     proto: tcp
-  when: nginx_https_port != 443
+  when: nginx_https_port is defined and nginx_https_port != 443
 
 - name: Copy Nginx configuration
   template:

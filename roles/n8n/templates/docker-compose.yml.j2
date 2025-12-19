@@ -8,10 +8,10 @@ services:
       - "127.0.0.1:{{ n8n_port }}:5678"
     environment:
       - "N8N_HOST={{ domain_name }}"
-      - "WEBHOOK_TUNNEL_URL=https://{{ domain_name }}:{{ nginx_https_port }}/"
-      - "WEBHOOK_URL=https://{{ domain_name }}:{{ nginx_https_port }}/"
-      - "N8N_PORT={{ n8n_port }}"
-      - "GENERIC_TIMEZONE=UTC"
+      - "WEBHOOK_TUNNEL_URL=https://{{ domain_name }}{% if nginx_https_port is defined and nginx_https_port != 443 %}:{{ nginx_https_port }}{% endif %}/"
+      - "WEBHOOK_URL=https://{{ domain_name }}{% if nginx_https_port is defined and nginx_https_port != 443 %}:{{ nginx_https_port }}{% endif %}/"
+      - "GENERIC_TIMEZONE={{ generic_timezone }}"
+      - "TZ={{ generic_timezone }}"
       - "EXECUTIONS_PROCESS=main"
       - "EXECUTIONS_TIMEOUT=3600"
       - "EXECUTIONS_TIMEOUT_MAX=7200"
@@ -19,16 +19,23 @@ services:
       - "EXECUTIONS_DATA_MAX_AGE=90"
       - "N8N_REINSTALL_MISSING_PACKAGES=true"
       - "N8N_RUNNERS_ENABLED=true"
-      - "VUE_APP_URL_BASE_API=https://{{ domain_name }}:{{ nginx_https_port }}/"
+      
+      # Optional: n8n Editor Base URL
+      - "VUE_APP_URL_BASE_API=https://{{ domain_name }}{% if nginx_https_port is defined and nginx_https_port != 443 %}:{{ nginx_https_port }}{% endif %}/"
       - "N8N_PUSH_BACKEND=websocket"
       - "N8N_TRUST_PROXY=true"
       - "N8N_PROXY_HOPS=1"
       - "N8N_CUSTOM_EXTENSIONS=/home/{{ ansible_user }}/n8n-data:/home/node/.n8n/custom"
       - "N8N_COMMUNITY_PACKAGES_ENABLED=true"
-      - "N8N_EDITOR_BASE_URL=https://{{ domain_name }}:{{ nginx_https_port }}"
       
-{% if n8n_storage_type == 'postgres' %}
-      - "DB_TYPE={{ n8n_db_type }}"
+      # For n8n > 1.0 (requires additional env vars for tunneling if not using standard ports)
+      # But usually WEBHOOK_URL is enough. 
+      # Some setups might need N8N_EDITOR_BASE_URL
+      - "N8N_EDITOR_BASE_URL=https://{{ domain_name }}{% if nginx_https_port is defined and nginx_https_port != 443 %}:{{ nginx_https_port }}{% endif %}"
+      
+      # Optional: PostgreSQL
+      {% if n8n_storage_type == 'postgres' %}
+      - "DB_TYPE=postgresdb"
       - "DB_POSTGRESDB_HOST={{ n8n_db_host }}"
       - "DB_POSTGRESDB_PORT={{ n8n_db_port }}"
       - "DB_POSTGRESDB_DATABASE={{ n8n_db_name }}"
