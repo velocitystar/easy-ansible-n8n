@@ -66,23 +66,30 @@ Edit the `inventory.ini` file to include your server's IP address and connection
 
 ### 4. Configure Variables
 
-Unlock the power of customization by editing `group_vars/all.yml`.
+Unlock the power of customization by editing `group_vars/all.yml`. This file contains **placeholder values** that you **MUST** replace with your own settings.
 
-**Key Variables:**
+**Key Variables to Update:**
 
--   `domain_name`: **(Required)** Your n8n domain (e.g., `n8n.example.com`).
--   `letsencrypt_email`: **(Required)** Email for Let's Encrypt expiration notices.
+-   `domain_name`: Change `n8n.YOURDOMAIN.COM` to your actual domain (e.g., `n8n.example.com`).
+-   `letsencrypt_email`: Change `USER@YOURDOMAIN.COM` to your valid email address for SSL notifications.
+-   `ansible_user`: Change `yourSudoUser` to the username you use to SSH into the server (e.g., `ubuntu` or `root`).
+
+**Other Configurable Variables:**
+
 -   `nginx_https_port`: The port you want to access n8n on (default: `443` or `4445` if customized).
 -   `n8n_version`: The Docker tag for n8n (default: `latest`).
 -   `n8n_storage_type`: `local` (SQLite) or `postgres` (PostgreSQL container).
 
-**Example `group_vars/all.yml`:**
+**Example `group_vars/all.yml` (Before editing):**
 
 ```yaml
 # User configuration
-domain_name: "n8n.example.com"
-letsencrypt_email: "admin@example.com"
+domain_name: "n8n.YOURDOMAIN.COM" # <--- REPLACE THIS
+letsencrypt_email: "USER@YOURDOMAIN.COM" # <--- REPLACE THIS
 nginx_https_port: 4445
+
+# System configuration
+ansible_user: "yourSudoUser" # <--- REPLACE THIS
 
 # n8n configuration
 n8n_version: "latest"
