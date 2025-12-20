@@ -9,14 +9,18 @@
   loop:
     - /home/{{ ansible_user }}/n8n-docker
     - /home/{{ ansible_user }}/n8n-data
+    - /home/{{ ansible_user }}/n8n-data/videos
 
 - name: Set permissions for n8n-data directory
   file:
-    path: /home/{{ ansible_user }}/n8n-data
+    path: "{{ item }}"
     owner: 1000
     group: 1000
     mode: '0755'
   become: yes
+  loop:
+    - /home/{{ ansible_user }}/n8n-data
+    - /home/{{ ansible_user }}/n8n-data/videos
 
 - name: Copy docker-compose.yml
   template:

@@ -46,9 +46,8 @@ services:
       - "/local-files:/files"
       - "/home/{{ ansible_user }}/n8n-data/videos:/videos"
       - "/usr/share/fonts:/usr/share/fonts"
-
-    command: 
-      - sh -c "chown -R node:node /home/node/.n8n-videos"
+      
+    command: sh -c "chown -R node:node /home/node/.n8n-videos"
 
 {% if n8n_storage_type == 'postgres' %}
     networks:
