@@ -26,8 +26,16 @@
     group: "{{ ansible_user }}"
     mode: '0644'
 
+- name: Copy Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: /home/{{ ansible_user }}/n8n-docker/Dockerfile
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
 - name: Start n8n container
-  shell: docker-compose up -d
+  shell: docker-compose up -d --build
   args:
     chdir: /home/{{ ansible_user }}/n8n-docker
   become: yes

@@ -1,0 +1,7 @@
+FROM {{ n8n_docker_image }}:{{ n8n_version }}
+
+USER root
+
+RUN apk add --update --no-cache ffmpeg
+
+USER node
