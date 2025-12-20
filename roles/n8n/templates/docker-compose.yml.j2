@@ -1,7 +1,7 @@
 version: "3"
 services:
   n8n:
-    image: "{{ n8n_docker_image }}:{{ n8n_version }}"
+    image: {{ n8n_docker_image }}:{{ n8n_version }}
     container_name: n8n
     restart: unless-stopped
     ports:
