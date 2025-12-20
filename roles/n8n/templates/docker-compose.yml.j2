@@ -1,7 +1,7 @@
 version: "3"
 services:
   n8n:
-    image: "n8nio/n8n:{{ n8n_version }}"
+    image: "n8n-with-ffmpeg:{{ n8n_version }}"
     container_name: n8n
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
       - "N8N_PUSH_BACKEND=websocket"
       - "N8N_TRUST_PROXY=true"
       - "N8N_PROXY_HOPS=1"
-      - "N8N_CUSTOM_EXTENSIONS=/home/{{ ansible_user }}/n8n-data:/home/node/.n8n/custom"
+      - "N8N_CUSTOM_EXTENSIONS=/home/{{ ansible_user }}/n8n-data:/home/node/.n8n"
       - "N8N_COMMUNITY_PACKAGES_ENABLED=true"
       - "N8N_EDITOR_BASE_URL=https://{{ domain_name }}:{{ nginx_https_port }}"
       

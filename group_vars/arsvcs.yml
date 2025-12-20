@@ -1,0 +1,17 @@
+# User configuration
+domain_name: "n8n2.arsvcs.co"
+letsencrypt_email: "n8n-admin@arsvcs.co"
+nginx_https_port: 4445
+
+# n8n configuration
+n8n_version: "1.123.6"
+n8n_port: 5678
+n8n_protocol: "https"
+webhook_url: "https://{{ domain_name }}/"
+
+# System configuration
+ansible_user: "administrator"
+
+# Storage configuration
+# Options: local, postgres
+n8n_storage_type: postgres
