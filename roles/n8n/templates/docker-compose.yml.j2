@@ -27,10 +27,10 @@ services:
       - "N8N_CUSTOM_EXTENSIONS=/home/{{ ansible_user }}/n8n-data:/home/node/.n8n"
       - "N8N_COMMUNITY_PACKAGES_ENABLED=true"
       - "N8N_EDITOR_BASE_URL=https://{{ domain_name }}:{{ nginx_https_port }}"
-      - N8N_ALLOW_EXECUTE_COMMAND=true
-      - N8N_ENABLE_NODE_DEV=true
-      - NODES_EXCLUDE=[]
-      - N8N_FILESYSTEM_PATH_WHITELIST=/videos
+      - "N8N_ALLOW_EXECUTE_COMMAND=true"
+      - "N8N_ENABLE_NODE_DEV=true"
+      - "NODES_EXCLUDE=[]"
+      - "N8N_FILESYSTEM_PATH_WHITELIST=/videos"
 {% if n8n_storage_type == 'postgres' %}
       - "DB_TYPE={{ n8n_db_type }}"
       - "DB_POSTGRESDB_HOST={{ n8n_db_host }}"
@@ -43,9 +43,9 @@ services:
     volumes:
       - "/home/{{ ansible_user }}/n8n-data:/home/node/.n8n"
       - "/home/{{ ansible_user }}/n8n-data/videos:/home/node/.n8n-videos"
-      - /local-files:/files
-      - "/home/{{ ansible_user }}/n8n-data/videos:/videos
-      - /usr/share/fonts:/usr/share/fonts
+      - "/local-files:/files"
+      - "/home/{{ ansible_user }}/n8n-data/videos:/videos"
+      - "/usr/share/fonts:/usr/share/fonts"
 
 {% if n8n_storage_type == 'postgres' %}
     networks:
