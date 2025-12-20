@@ -4,6 +4,7 @@ letsencrypt_email: "USER@YOURDOMAIN.COM"
 nginx_https_port: 4445
 
 # n8n configuration
+n8n_docker_image: "n8nio/n8n"
 n8n_version: "latest"
 n8n_port: 5678
 n8n_protocol: "https"
