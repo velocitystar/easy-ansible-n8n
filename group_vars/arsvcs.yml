@@ -4,7 +4,7 @@ letsencrypt_email: "n8n-admin@arsvcs.co"
 nginx_https_port: 4445
 
 # n8n configuration
-n8n_docker_image: "n8n-with-ffmpeg" 
+n8n_docker_image: "n8nio/n8n" 
 n8n_version: "latest"
 n8n_port: 5678
 n8n_protocol: "https"
